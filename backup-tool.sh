@@ -1,14 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# ==========================================
 # SETTINGS / DEFAULTS
-# ==========================================
 DEST="$HOME/backups"
 KEEP=5
 
-# ==========================================
+
 # FUNCTIONS
-# ==========================================
 
 # Display usage instructions and exit
 usage() {
