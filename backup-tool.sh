@@ -5,7 +5,12 @@
 # Author: Ama Nkeng, Rebase Code Camp
 #
 # ---- settings ---------------------------------------------------
-DEST="$HOME/backupS"
+DEST="#HOME/backups"
+
+if [[ -z "$DEST" ]]; then
+    mkdir "$HOME/backups"
+    echo "Backup has been created in home"
+fi
 KEEP=5
 VERBOSE=false
 
