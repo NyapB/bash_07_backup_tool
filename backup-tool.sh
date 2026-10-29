@@ -7,12 +7,21 @@
 # ---- settings ---------------------------------------------------
 DEST="#HOME/backups"
 
-if [[ -z "$DEST" ]]; then
-    mkdir "$HOME/backups"
+if [[ ! -d "$DEST" ]]; then
+    mkdir -p "$HOME/backups"
     echo "Backup has been created in home"
 fi
 KEEP=5
 VERBOSE=false
+
+#archive name
+src="/home/Becky/Documents"
+tar -czf "Documents-$(date +%Y%m%d-%H%M%S).tar.gz" -C "$(DEST "$src")" "$(basename "$src")"
+
+#list backups newest first, skip the first keep, delete the rest
+ls -lt "DEST"/Documents-*.tar.gz | tail -n +$((KEEP +1)) | while IFS= read -r old; do
+    rm -- "$old"
+done 
 
 #----Helper function------------
 Usage(){
