@@ -12,18 +12,21 @@ The project's goal is to allow users to input numbers over and over until they g
 
 ## 🛠 Tech Stack
 
-bash
+bash programming
+language: shell
+git
+github
 
 ## 📷 Screenshots
 
-![Bash Script](<assets/images/Screenshot From 2026-10-24 09-18-08.png>)
+![backup tool](<assets/images/Screenshot From 2026-10-29 15-40-58.png>)
 
 ## ⚙ Installation & Setup
 
 clone the repository
 
 ```bash
-git clone https://github.com/NyapB/Bash_Guessing_Game.git
+git clone https://github.com/NyapB/bash_07_backup_tool.git
 
 - cd Bash_Guessing_Game
 - give permission using chmod +x guessing-game.sh
