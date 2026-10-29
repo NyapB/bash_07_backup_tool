@@ -4,11 +4,13 @@ A guessing game built with batch
 
 ## 📌 Problem Statement
 
-using this project to learn and practice bash programming
+A laptop gets stolen in a taxi. A hard drive dies the night before a presentation. Every developer has a story about lost work. Today you build backup.sh, a professional-grade tool that creates compressed, timestamped backups and cleans up old ones automatically.
 
 ## 🎯 Project Goals
 
-The project's goal is to allow users to input numbers over and over until they guess the random number given by the program correctly.
+- input backup folder
+- create if none exists
+- input file or folder to be backed
 
 ## 🛠 Tech Stack
 
