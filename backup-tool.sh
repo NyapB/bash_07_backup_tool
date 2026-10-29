@@ -79,7 +79,7 @@ rotate_backups() {
     done < <(find "$dest" -maxdepth 1 -name "${folder}-*.tar.gz" -type f -print0 | sort -z -r)
 }
 
-# Main execution orchestrator
+# Main 
 main() {
     # 1. Parse options using getopts
     local opt
