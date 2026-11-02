@@ -52,7 +52,6 @@ create_backup() {
         echo "Successfully created backup: $archive_name"
     else
         die "Tar compression failed" 1
-    end
     fi
 }
 
