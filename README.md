@@ -16,8 +16,8 @@ A laptop gets stolen in a taxi. A hard drive dies the night before a presentatio
 
 bash programming
 language: shell
-git
-github
+Git
+Github
 
 ## 📷 Screenshots
 
