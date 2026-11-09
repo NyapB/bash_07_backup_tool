@@ -64,15 +64,18 @@ rotate_backups() {
     local folder
     folder=$(basename "$src")
     
-    # Find files matching this specific folder's backup pattern, sorted newest to oldest
-    # Using a subshell loop to safely parse null-terminated results
+    # Enforce precise structural matching on the timestamp segment to prevent over-matching similar prefixes
+    # e.g., prevents folder "proj" matching "proj-foo"
+    local pattern="${folder}-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9].tar.gz"
+    
+    # Find matching files, sort cleanly by filename descending (newest timestamp first), and prune
     local count=0
     while IFS= read -r -d '' file; do
         ((count++))
         if (( count > keep )); then
             rm -f "$file"
         fi
-    done < <(find "$dest" -maxdepth 1 -name "${folder}-*.tar.gz" -type f -print0 | sort -z -r)
+    done < <(find "$dest" -maxdepth 1 -name "$pattern" -type f -print0 | sort -z -r)
 }
 
 # Main 
@@ -99,6 +102,9 @@ main() {
     if [[ ! -d "$source_dir" ]]; then
         die "SOURCE path '$source_dir' does not exist or is not a folder" 2
     fi
+
+    # Resolve relative sources (like "." or "../") into a real canonical absolute folder name before backup execution
+    source_dir=$(cd "$source_dir" && pwd)
 
     if [[ ! "$KEEP" =~ ^[1-9][0-9]*$ ]]; then
         die "KEEP value (-k) must be a positive whole number (got: '$KEEP')" 2
