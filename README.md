@@ -1,6 +1,6 @@
 # 🏷 Backup Tool
 
-A guessing game built with batch
+A tool used to backup important files to avoid loss
 
 ## 📌 Problem Statement
 
