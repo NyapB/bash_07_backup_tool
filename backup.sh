@@ -114,8 +114,13 @@ main() {
         die "SOURCE path '$source_dir' does not exist or is not a folder" 2
     fi
 
-    # Resolve relative sources (like "." or "../") into a real canonical absolute folder name before backup execution
+    # Resolve relative sources (like "." or "../") into a real canonical absolute folder name
     source_dir=$(cd "$source_dir" && pwd)
+
+    # Guard against backing up root "/" which has no valid folder basename
+    if [[ "$source_dir" == "/" ]]; then
+        die "Cannot back up the root directory '/'" 2
+    fi
 
     if [[ ! "$KEEP" =~ ^[1-9][0-9]*$ ]]; then
         die "KEEP value (-k) must be a positive whole number (got: '$KEEP')" 2
