@@ -30,9 +30,9 @@ clone the repository
 ```bash
 git clone https://github.com/NyapB/bash_07_backup_tool.git
 
-- cd Bash_Guessing_Game
-- give permission using chmod +x guessing-game.sh
-- run with ./guessing-game.sh
+- cd bash-07-backup-tool
+- give permission using chmod +x backup.sh
+- run with ./backup.sh
 ```
 
 ## 🧠 Challenges Faced

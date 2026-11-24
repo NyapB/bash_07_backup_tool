@@ -64,18 +64,29 @@ rotate_backups() {
     local folder
     folder=$(basename "$src")
     
-    # Enforce precise structural matching on the timestamp segment to prevent over-matching similar prefixes
-    # e.g., prevents folder "proj" matching "proj-foo"
-    local pattern="${folder}-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9][0-9][0-9].tar.gz"
-    
-    # Find matching files, sort cleanly by filename descending (newest timestamp first), and prune
+    # Match files using literal prefix + strict timestamp regex so special characters
+    # in folder names never affect globbing or sort order
     local count=0
     while IFS= read -r -d '' file; do
         ((count++))
         if (( count > keep )); then
             rm -f "$file"
         fi
-    done < <(find "$dest" -maxdepth 1 -name "$pattern" -type f -print0 | sort -z -r)
+    done < <(
+        find "$dest" -maxdepth 1 -type f -print0 | while IFS= read -r -d '' candidate; do
+            local base
+            base=$(basename "$candidate")
+            if [[ "$base" == "${folder}-"* ]]; then
+                local suffix="${base#"${folder}-"}"
+                if [[ "$suffix" =~ ^[0-9]{8}-[0-9]{6}\.tar\.gz$ ]]; then
+                    # Prefix with timestamp so sorting depends strictly on timestamp
+                    printf '%s|%s\0' "$suffix" "$candidate"
+                fi
+            fi
+        done | LC_ALL=C sort -z -r | while IFS= read -r -d '' sorted_entry; do
+            printf '%s\0' "${sorted_entry#*|}"
+        done
+    )
 }
 
 # Main 
