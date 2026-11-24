@@ -1,23 +1,23 @@
 # 🏷 Backup Tool
 
-A tool used to backup important files to avoid loss
+A command-line utility written in Bash that creates compressed, timestamped `.tar.gz` backups of a folder and automatically rotates old archives.
 
 ## 📌 Problem Statement
 
-A laptop gets stolen in a taxi. A hard drive dies the night before a presentation. Every developer has a story about lost work. Today you build backup.sh, a professional-grade tool that creates compressed, timestamped backups and cleans up old ones automatically.
+A laptop gets stolen in a taxi, or a hard drive fails the night before a presentation. `backup.sh` protects important project directories by automating compressed, timestamped backups and cleaning up older archives based on a retention limit.
 
 ## 🎯 Project Goals
 
-- input backup folder
-- create if none exists
-- input file or folder to be backed
+- Accept a target source directory and validate that it exists
+- Create the destination backup folder automatically if it does not exist
+- Generate clean, timestamped `.tar.gz` archives (`<folder>-YYYYMMDD-HHMMSS.tar.gz`)
+- Rotate old backups to keep only the newest `KEEP` archives per folder
 
 ## 🛠 Tech Stack
 
-bash programming
-language: shell
-Git
-GitHub
+- Bash (Shell Scripting)
+- Git
+- GitHub
 
 ## 📷 Screenshots
 
@@ -25,37 +25,61 @@ GitHub
 
 ## ⚙ Installation & Setup
 
-clone the repository
+Clone the repository and make `backup.sh` executable:
 
 ```bash
 git clone https://github.com/NyapB/bash_07_backup_tool.git
+cd bash_07_backup_tool
+chmod +x backup.sh
+```
 
-- cd bash-07-backup-tool
-- give permission using chmod +x backup.sh
-- run with ./backup.sh
+## 💻 Usage & Examples
+
+```bash
+./backup.sh [-d DEST] [-k KEEP] SOURCE
+```
+
+- Show help instructions (`-h`):
+
+```bash
+./backup.sh -h
+```
+
+- Back up a folder to the default location (`~/backups`) keeping the 5 newest backups:
+
+```bash
+./backup.sh ./my_project
+```
+
+- Back up to a custom destination (`-d`) and keep only the 2 newest archive(`-k`):
+
+```bash
+./backup.sh -d /tmp/project_backups -k 2 ./my_project
+```
+
+- Back up the current working directory (`.`):
+
+```bash
+./backup.sh -d ~/backups -k 3 .
 ```
 
 ## 🧠 Challenges Faced
 
-- Organizing parse options
-- organizing scripts into small functions with a main
-- Building a complete backup tool
+- Parsing command-line options cleanly with `getopts`
+- Structuring the script into modular functions (`usage`, `die`, `create_backup`, `rotate_backups`, and `main`)
+- Safely rotating archives by timestamp without deleting backups from similarly named folders
 
 ## 📚 What I Learned
 
-- Write functions with parameters, local variables and return values
-- Organise a script into small functions with a main
-- Parse options like -v , -n 5 and --help , with getopts and with case
-- Use meaningful exit codes and check them
-- Work with dates and archives ( date , tar )
-- Build the Backup Tool project
+- Writing functions with parameters, `local` variables, and proper exit codes (`0`, `1`, `2`)
+- Organizing a Bash script into clean, modular functions called from `main`
+- Parsing flags (`-d`, `-k`, and `-h`) with `getopts` and `case`
+- Working with timestamps (`date`), clean archive paths (`tar -C`), and safe sorting (`LC_ALL=C sort`)
 
 ## 👨🏽‍💻 Author
 
 Nyap Becky Beri
-
-Junior Fullstack Developer
-
-[beribecky8@gmail.com](mailto:beribecky8@gmail.com)
+Junior Fullstack Developer  
+[beribecky8@gmail.com](mailto:beribecky8@gmail.com)  
 
 🌍 Based in Cameroon | Open to remote opportunities
